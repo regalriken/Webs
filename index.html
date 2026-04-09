@@ -109,6 +109,12 @@
     transition: width 0.25s ease;
   }
   .nav-links a:hover::after { width: 100%; }
+  #gitIcon{
+  .my-zoomed-icon {
+    display: inline-block; /* Required for transform to work on <i> */
+    transform: scale(1.5);
+}
+  }
 
   /* Hero */
   .hero {
@@ -936,7 +942,7 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://github.com/regalriken"> <i class="fa-brands fa-github skill-icon"></i></a>
+    <li><a href="https://github.com/regalriken"> <i class="fa-brands fa-github" id="gitIcon"></i></a>
       </li>
   </ul>
 </nav>
