@@ -74,6 +74,207 @@ section { position:relative; z-index:1; min-height:100vh; padding:5rem 0 4rem; }
 .btn:hover { background:var(--green-glow); box-shadow:0 0 20px rgba(0,255,65,0.3); color:var(--white); }
 .btn-outline { border-color:var(--green-dim); color:var(--green-dim); }
 
+/* DRONE SECTION — fully independent palette, real DJI look */
+.drone-panel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 480px;
+  background: #0e1117;
+  border: 1px solid #2a2d35;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  font-family: 'Inter', 'DIN Condensed', 'Share Tech Mono', sans-serif;
+}
+#drone-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.drone-hud {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+}
+/* Top bar — DJI Go 4 style dark strip */
+.drone-topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 36px;
+  background: rgba(10,12,16,0.82);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+.drone-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dji-logo-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #c8cdd8;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.drone-mode-badge {
+  font-size: 0.5rem;
+  color: #f5a623;
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.35);
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.drone-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dji-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+.dji-signal span {
+  display: block;
+  width: 3px;
+  background: #4ade80;
+  border-radius: 1px;
+}
+.dji-signal span:nth-child(1){height:3px}
+.dji-signal span:nth-child(2){height:5px}
+.dji-signal span:nth-child(3){height:8px}
+.dji-signal span:nth-child(4){height:11px; background:#9ca3af}
+/* Bottom bar */
+.drone-bottombar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 36px;
+  background: rgba(10,12,16,0.82);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+.drone-stat-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.drone-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.drone-stat-val {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #e8eaf0;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.drone-stat-lbl {
+  font-size: 0.42rem;
+  color: #6b7280;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.drone-stat-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+}
+/* Battery indicator */
+.dji-battery {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dji-battery-bar {
+  width: 26px;
+  height: 11px;
+  border: 1.5px solid #4b5563;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1.5px;
+}
+.dji-battery-bar::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5px;
+  height: 5px;
+  background: #4b5563;
+  border-radius: 0 1px 1px 0;
+}
+.dji-battery-fill {
+  height: 100%;
+  background: #4ade80;
+  border-radius: 1px;
+  width: 82%;
+}
+.dji-battery-pct {
+  font-size: 0.5rem;
+  color: #4ade80;
+  font-weight: 600;
+}
+/* Live dot */
+.drone-live {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.5rem;
+  color: #9ca3af;
+  letter-spacing: 1px;
+}
+.live-dot-dji {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  animation: djipulse 1.2s ease-in-out infinite;
+}
+@keyframes djipulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.5; transform:scale(0.8)} }
+/* Corner brackets — subtle white */
+.drone-hud-corner {
+  position: absolute;
+  width: 16px; height: 16px;
+  border-color: rgba(255,255,255,0.2);
+  border-style: solid;
+}
+.drone-hud-corner.tl { top:42px; left:10px; border-width:1.5px 0 0 1.5px; }
+.drone-hud-corner.tr { top:42px; right:10px; border-width:1.5px 1.5px 0 0; }
+.drone-hud-corner.bl { bottom:42px; left:10px; border-width:0 0 1.5px 1.5px; }
+.drone-hud-corner.br { bottom:42px; right:10px; border-width:0 1.5px 1.5px 0; }
+.drone-controls {
+  position: absolute;
+  bottom: 42px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.42rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+  text-align: right;
+  line-height: 1.6;
+}
+
 /* ABOUT */
 #about { background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%); }
 .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
@@ -176,6 +377,7 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
   .certs-list { grid-template-columns:1fr; }
   nav ul { gap:0.75rem; }
   .nav-status { display:none; }
+  .drone-panel { aspect-ratio: 4/3; }
 }
 </style>
 </head>
@@ -209,27 +411,69 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
           <a href="#projects" class="btn btn-outline">&gt; VIEW_PROJECTS</a>
         </div>
       </div>
-      <div class="terminal-box">
-        <div class="terminal-bar">
-          <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
-          <span class="terminal-title">bash — umang@sec-ops ~ — 80x24</span>
-        </div>
-        <div class="terminal-body">
-          <div><span class="t-prompt">umang@sec-ops:~$ </span><span class="t-cmd">whoami</span></div>
-          <div class="t-out">umang_patel // cybersecurity_analyst</div><br>
-          <div><span class="t-prompt">umang@sec-ops:~$ </span><span class="t-cmd">cat profile.txt</span></div>
-          <div class="t-out">&gt; Location: <span class="t-hi">Toronto, ON</span></div>
-          <div class="t-out">&gt; Role: <span class="t-hi">Cybersecurity Analyst</span></div>
-          <div class="t-out">&gt; Status: <span class="t-hi">ACTIVE @ ElasticCyber</span></div>
-          <div class="t-out">&gt; Cert: <span class="t-hi">Security+_InProgress</span></div><br>
-          <div><span class="t-prompt">umang@sec-ops:~$ </span><span class="t-cmd">nmap --open targets</span></div>
-          <div class="t-dim">Starting Nmap scan...</div>
-          <div class="t-out">&gt; Port 22/tcp &nbsp;<span class="t-hi">open</span> &nbsp;ssh</div>
-          <div class="t-out">&gt; Port 443/tcp <span class="t-hi">open</span> &nbsp;https</div>
-          <div class="t-out">&gt; Port 8080/tcp <span class="t-err">filtered</span> http</div><br>
-          <div><span class="t-prompt">umang@sec-ops:~$ </span><span class="cursor"></span></div>
+
+      <!-- DJI NEO DRONE 3D PANEL -->
+      <div class="drone-panel">
+        <canvas id="drone-canvas"></canvas>
+        <div class="drone-hud">
+          <!-- Top bar -->
+          <div class="drone-topbar">
+            <div class="drone-topbar-left">
+              <span class="dji-logo-text">DJI NEO</span>
+              <span class="drone-mode-badge">P-GPS</span>
+            </div>
+            <div class="drone-topbar-right">
+              <div class="drone-live"><span class="live-dot-dji"></span>REC</div>
+              <div class="dji-signal">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="dji-battery">
+                <div class="dji-battery-bar"><div class="dji-battery-fill" id="hud-batbar"></div></div>
+                <span class="dji-battery-pct" id="hud-bat">87%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Corner brackets -->
+          <div class="drone-hud-corner tl"></div>
+          <div class="drone-hud-corner tr"></div>
+          <div class="drone-hud-corner bl"></div>
+          <div class="drone-hud-corner br"></div>
+          <!-- Bottom stats bar -->
+          <div class="drone-bottombar">
+            <div class="drone-stat-group">
+              <div class="drone-stat">
+                <span class="drone-stat-val" id="hud-alt">12.4<span style="font-size:0.5rem;color:#6b7280">m</span></span>
+                <span class="drone-stat-lbl">ALT</span>
+              </div>
+              <div class="drone-stat-sep"></div>
+              <div class="drone-stat">
+                <span class="drone-stat-val" id="hud-spd">0.0<span style="font-size:0.5rem;color:#6b7280">m/s</span></span>
+                <span class="drone-stat-lbl">H.SPD</span>
+              </div>
+              <div class="drone-stat-sep"></div>
+              <div class="drone-stat">
+                <span class="drone-stat-val" id="hud-dist">34<span style="font-size:0.5rem;color:#6b7280">m</span></span>
+                <span class="drone-stat-lbl">DIST</span>
+              </div>
+            </div>
+            <div class="drone-stat-group">
+              <div class="drone-stat">
+                <span class="drone-stat-val" style="color:#4ade80">LOCKED</span>
+                <span class="drone-stat-lbl">GPS</span>
+              </div>
+              <div class="drone-stat-sep"></div>
+              <div class="drone-stat">
+                <span class="drone-stat-val">14</span>
+                <span class="drone-stat-lbl">SATS</span>
+              </div>
+            </div>
+          </div>
+          <div class="drone-controls">
+            DRAG TO ROTATE<br>SCROLL TO ZOOM
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -247,7 +491,7 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
           <div class="info-row"><span class="info-label">NAME:</span><span class="info-val">Umang Patel</span></div>
           <div class="info-row"><span class="info-label">LOCATION:</span><span class="info-val">Toronto, ON, Canada</span></div>
           <div class="info-row"><span class="info-label">PHONE:</span><span class="info-val">(249) 989-2957</span></div>
-          <div class="info-row"><span class="info-label">EMAIL:</span><span class="info-val">umangpamol@gmail.com</span></div>
+          <div class="info-row"><span class="info-label">EMAIL:</span><span class="info-val">umangpatel@email.com</span></div>
           <div class="info-row"><span class="info-label">LINKEDIN:</span><span class="info-val">patel--umang</span></div>
           <div class="info-row"><span class="info-label">STATUS:</span><span class="info-val" style="color:var(--green)">EMPLOYED // OPEN TO OPPS</span></div>
         </div>
@@ -275,16 +519,18 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
           </div>
         </div>
       </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>// Proficiency Ratings</h3>
-        <div class="bar-wrap"><div class="bar-label"><span>Security Monitoring & IR</span><span>92%</span></div><div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Vulnerability Assessment</span><span>88%</span></div><div class="bar-bg"><div class="bar-fill" style="width:88%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>SIEM & Log Analysis</span><span>85%</span></div><div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Network Scanning (Nmap)</span><span>87%</span></div><div class="bar-bg"><div class="bar-fill" style="width:87%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Windows & Linux Admin</span><span>83%</span></div><div class="bar-bg"><div class="bar-fill" style="width:83%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Firewall & Security Controls</span><span>86%</span></div><div class="bar-bg"><div class="bar-fill" style="width:86%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Data Analysis & Reporting</span><span>80%</span></div><div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div></div>
-        <div class="bar-wrap"><div class="bar-label"><span>Technical Documentation</span><span>84%</span></div><div class="bar-bg"><div class="bar-fill" style="width:84%"></div></div></div>
+      <div>
+        <div class="card" style="margin-bottom:0">
+          <h3>// Proficiency Ratings</h3>
+          <div class="bar-wrap"><div class="bar-label"><span>Security Monitoring & IR</span><span>92%</span></div><div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Vulnerability Assessment</span><span>88%</span></div><div class="bar-bg"><div class="bar-fill" style="width:88%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>SIEM & Log Analysis</span><span>85%</span></div><div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Network Scanning (Nmap)</span><span>87%</span></div><div class="bar-bg"><div class="bar-fill" style="width:87%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Windows & Linux Admin</span><span>83%</span></div><div class="bar-bg"><div class="bar-fill" style="width:83%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Firewall & Security Controls</span><span>86%</span></div><div class="bar-bg"><div class="bar-fill" style="width:86%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Data Analysis & Reporting</span><span>80%</span></div><div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-label"><span>Technical Documentation</span><span>84%</span></div><div class="bar-bg"><div class="bar-fill" style="width:84%"></div></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -451,9 +697,9 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
         <h3>// Open Channel</h3>
         <p>Looking to collaborate, hire, or discuss cybersecurity? Establish a secure connection below.</p>
         <div class="contact-links">
-          <a href="mailto:umangpamol@gmail.com" class="contact-link">
+          <a href="mailto:umangpatel@email.com" class="contact-link">
             <span class="link-icon">✉️</span>
-            <div class="link-text"><span>umangpamol@gmail.com</span><span class="link-label">EMAIL // PRIMARY CHANNEL</span></div>
+            <div class="link-text"><span>umangpatel@email.com</span><span class="link-label">EMAIL // PRIMARY CHANNEL</span></div>
           </a>
           <a href="tel:+12499892957" class="contact-link">
             <span class="link-icon">📞</span>
@@ -475,13 +721,17 @@ footer { position:relative; z-index:1; background:var(--bg2); border-top:1px sol
   <span>ALL SYSTEMS NOMINAL</span>
 </footer>
 
+<!-- THREE.JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
+/* ─── MATRIX RAIN ─── */
 const canvas = document.getElementById('matrix-canvas');
 const ctx = canvas.getContext('2d');
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 resize();
 window.addEventListener('resize', resize);
-const chars = 'アイウエオ0123456789ABCDEF<>{}[]//';
+const chars = 'アイウエオ0123456789ABCDEF*#<>{}[]//';
 let drops = [];
 function initDrops() { drops = Array(Math.floor(canvas.width/16)).fill(1); }
 initDrops();
@@ -489,14 +739,484 @@ window.addEventListener('resize', initDrops);
 setInterval(() => {
   ctx.fillStyle = 'rgba(2,10,2,0.05)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#00ff41';
-  ctx.font = '14px monospace';
-  for (let i = 0; i < drops.length; i++) {
-    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*16, drops[i]*16);
-    if (drops[i]*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+  ctx.fillStyle = '#00cc33';
+  ctx.font = '13px Share Tech Mono, monospace';
+  drops.forEach((y, i) => {
+    const char = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillText(char, i * 16, y * 16);
+    if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
     drops[i]++;
+  });
+}, 50);
+
+/* ─── DJI NEO 3D DRONE ─── */
+(function() {
+  const panel = document.querySelector('.drone-panel');
+  const droneCanvas = document.getElementById('drone-canvas');
+
+  // Scene
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0e1117);
+  scene.fog = new THREE.Fog(0x0e1117, 14, 28);
+
+  // Camera
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  camera.position.set(0, 1.8, 5.5);
+  camera.lookAt(0, 0, 0);
+
+  // Renderer
+  const renderer = new THREE.WebGLRenderer({ canvas: droneCanvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+
+  function resizeDrone() {
+    const w = panel.clientWidth;
+    const h = panel.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
   }
-}, 150);
+  resizeDrone();
+  window.addEventListener('resize', resizeDrone);
+
+  // ── Lights — real product photography style ──
+  // Soft ambient
+  const ambientLight = new THREE.AmbientLight(0xc8d0e0, 0.5);
+  scene.add(ambientLight);
+
+  // Key light — soft white from top-front (studio)
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+  keyLight.position.set(2, 5, 4);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.width = 1024;
+  keyLight.shadow.mapSize.height = 1024;
+  scene.add(keyLight);
+
+  // Fill light — cool blue from left
+  const fillLight = new THREE.DirectionalLight(0xa8c4e8, 0.5);
+  fillLight.position.set(-4, 2, 2);
+  scene.add(fillLight);
+
+  // Rim light — warm from behind
+  const rimLight = new THREE.DirectionalLight(0xffe8c0, 0.7);
+  rimLight.position.set(0, 1, -5);
+  scene.add(rimLight);
+
+  // Under bounce
+  const bounceLight = new THREE.PointLight(0x8090a8, 0.4, 10);
+  bounceLight.position.set(0, -3, 0);
+  scene.add(bounceLight);
+
+  // ── Real DJI Neo Materials ──
+  // Body: dark charcoal grey (DJI's signature dark grey)
+  const bodyMat = new THREE.MeshStandardMaterial({
+    color: 0x2a2d32,
+    metalness: 0.4,
+    roughness: 0.55,
+  });
+  // Top shell: slightly lighter matte grey
+  const shellMat = new THREE.MeshStandardMaterial({
+    color: 0x353840,
+    metalness: 0.3,
+    roughness: 0.65,
+  });
+  // Arms / structural: medium dark grey
+  const armMat = new THREE.MeshStandardMaterial({
+    color: 0x1f2226,
+    metalness: 0.5,
+    roughness: 0.5,
+  });
+  // Motors: brushed dark metal
+  const motorMat = new THREE.MeshStandardMaterial({
+    color: 0x18191c,
+    metalness: 0.85,
+    roughness: 0.25,
+  });
+  // Motor caps: silver/gunmetal accent
+  const motorCapMat = new THREE.MeshStandardMaterial({
+    color: 0x8a8f98,
+    metalness: 0.9,
+    roughness: 0.2,
+  });
+  // Props: semi-transparent dark grey (real DJI propeller look)
+  const propMat = new THREE.MeshStandardMaterial({
+    color: 0x1a1c20,
+    metalness: 0.2,
+    roughness: 0.6,
+    transparent: true,
+    opacity: 0.82,
+  });
+  // Camera gimbal housing: matte black
+  const gimbalMat = new THREE.MeshStandardMaterial({
+    color: 0x0d0e10,
+    metalness: 0.6,
+    roughness: 0.4,
+  });
+  // Camera lens: dark glass
+  const glassMat = new THREE.MeshStandardMaterial({
+    color: 0x050608,
+    metalness: 0.1,
+    roughness: 0.05,
+    transparent: true,
+    opacity: 0.92,
+  });
+  // Lens inner reflective
+  const lensInnerMat = new THREE.MeshStandardMaterial({
+    color: 0x1a2840,
+    metalness: 0.3,
+    roughness: 0.1,
+    transparent: true,
+    opacity: 0.85,
+  });
+  // Front LEDs: real green
+  const ledGreenMat = new THREE.MeshStandardMaterial({
+    color: 0x00ff44,
+    emissive: 0x00ff44,
+    emissiveIntensity: 3.0,
+    roughness: 1, metalness: 0,
+  });
+  // Rear LEDs: real red
+  const ledRedMat = new THREE.MeshStandardMaterial({
+    color: 0xff2200,
+    emissive: 0xff2200,
+    emissiveIntensity: 3.0,
+    roughness: 1, metalness: 0,
+  });
+  // Status LED strip: white/cool
+  const ledWhiteMat = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    emissive: 0xe8f0ff,
+    emissiveIntensity: 2.0,
+    roughness: 1, metalness: 0,
+  });
+  // Plastic accent strips
+  const accentMat = new THREE.MeshStandardMaterial({
+    color: 0x4a4f58,
+    metalness: 0.4,
+    roughness: 0.6,
+  });
+  // Rubber feet
+  const rubberMat = new THREE.MeshStandardMaterial({
+    color: 0x111215,
+    metalness: 0,
+    roughness: 0.95,
+  });
+
+  // ── Build DJI Neo Drone ──
+  const drone = new THREE.Group();
+
+  // Main body — compact square-ish form factor (dark charcoal)
+  const bodyGeo = new THREE.BoxGeometry(1.1, 0.28, 1.0);
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  body.castShadow = true;
+  drone.add(body);
+
+  // Body top shell (slightly lighter grey)
+  const topPanelGeo = new THREE.BoxGeometry(0.9, 0.06, 0.82);
+  const topPanel = new THREE.Mesh(topPanelGeo, shellMat);
+  topPanel.position.set(0, 0.17, 0);
+  drone.add(topPanel);
+
+  // Center spine ridge (accent grey)
+  const ridgeGeo = new THREE.BoxGeometry(0.16, 0.04, 0.72);
+  const ridge = new THREE.Mesh(ridgeGeo, accentMat);
+  ridge.position.set(0, 0.21, 0);
+  drone.add(ridge);
+
+  // Front nose plate (slightly angled panel)
+  const noseGeo = new THREE.BoxGeometry(0.7, 0.06, 0.08);
+  const nose = new THREE.Mesh(noseGeo, shellMat);
+  nose.position.set(0, -0.02, 0.47);
+  nose.rotation.x = 0.18;
+  drone.add(nose);
+
+  // Camera gimbal housing (front bottom) — matte black
+  const gimbalHousingGeo = new THREE.CylinderGeometry(0.14, 0.12, 0.14, 20);
+  const gimbalHousing = new THREE.Mesh(gimbalHousingGeo, gimbalMat);
+  gimbalHousing.position.set(0, -0.19, 0.38);
+  drone.add(gimbalHousing);
+
+  // Gimbal ring
+  const gimbalRingGeo = new THREE.TorusGeometry(0.10, 0.015, 10, 28);
+  const gimbalRing = new THREE.Mesh(gimbalRingGeo, motorCapMat);
+  gimbalRing.position.set(0, -0.19, 0.38);
+  gimbalRing.rotation.x = Math.PI / 2;
+  drone.add(gimbalRing);
+
+  // Camera lens — dark glass
+  const lensGeo = new THREE.CylinderGeometry(0.082, 0.082, 0.06, 28);
+  const lens = new THREE.Mesh(lensGeo, glassMat);
+  lens.rotation.x = Math.PI / 2;
+  lens.position.set(0, -0.19, 0.5);
+  drone.add(lens);
+
+  // Inner lens element
+  const lensInnerGeo = new THREE.CircleGeometry(0.055, 24);
+  const lensInner = new THREE.Mesh(lensInnerGeo, lensInnerMat);
+  lensInner.rotation.x = -Math.PI / 2;
+  lensInner.position.set(0, -0.19, 0.532);
+  drone.add(lensInner);
+
+  // Lens glint (tiny bright specular)
+  const glintGeo = new THREE.CircleGeometry(0.012, 12);
+  const glintMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 4 });
+  const glint = new THREE.Mesh(glintGeo, glintMat);
+  glint.position.set(-0.025, -0.165, 0.534);
+  glint.rotation.x = -0.15;
+  drone.add(glint);
+
+  // 4 Arm struts — DJI Neo style diagonal arms
+  const armPositions = [
+    { x:  0.60, z:  0.52, ry:  Math.PI * 0.22 },
+    { x: -0.60, z:  0.52, ry: -Math.PI * 0.22 },
+    { x:  0.60, z: -0.52, ry: -Math.PI * 0.22 },
+    { x: -0.60, z: -0.52, ry:  Math.PI * 0.22 },
+  ];
+
+  const armGeo = new THREE.BoxGeometry(0.52, 0.055, 0.085);
+  const motorGeo = new THREE.CylinderGeometry(0.105, 0.095, 0.10, 22);
+  const motorCapGeo2 = new THREE.CylinderGeometry(0.072, 0.105, 0.04, 22);
+  const motorBottomGeo = new THREE.CylinderGeometry(0.075, 0.095, 0.03, 22);
+
+  const propGroups = [];
+
+  armPositions.forEach((pos, i) => {
+    // Arm
+    const arm = new THREE.Mesh(armGeo, armMat);
+    arm.position.set(pos.x * 0.5, -0.01, pos.z * 0.5);
+    arm.rotation.y = pos.ry;
+    arm.castShadow = true;
+    drone.add(arm);
+
+    // Motor body (brushed dark metal)
+    const motor = new THREE.Mesh(motorGeo, motorMat);
+    motor.position.set(pos.x, 0.04, pos.z);
+    motor.castShadow = true;
+    drone.add(motor);
+
+    // Motor top cap (silver)
+    const motorCap = new THREE.Mesh(motorCapGeo2, motorCapMat);
+    motorCap.position.set(pos.x, 0.11, pos.z);
+    drone.add(motorCap);
+
+    // Motor bottom ring
+    const motorBot = new THREE.Mesh(motorBottomGeo, accentMat);
+    motorBot.position.set(pos.x, -0.015, pos.z);
+    drone.add(motorBot);
+
+    // Propeller group
+    const propGroup = new THREE.Group();
+    propGroup.position.set(pos.x, 0.155, pos.z);
+
+    // Two blades — DJI Neo thin tapered blades
+    for (let b = 0; b < 2; b++) {
+      const bladeShape = new THREE.Shape();
+      bladeShape.moveTo(0, 0);
+      bladeShape.bezierCurveTo(0.04, 0.022, 0.22, 0.038, 0.50, 0.016);
+      bladeShape.bezierCurveTo(0.50, 0.016, 0.50, -0.016, 0.50, -0.016);
+      bladeShape.bezierCurveTo(0.22, -0.038, 0.04, -0.022, 0, 0);
+      const bladeGeo = new THREE.ShapeGeometry(bladeShape, 10);
+      const blade = new THREE.Mesh(bladeGeo, propMat);
+      blade.rotation.y = b * Math.PI;
+      blade.rotation.x = Math.PI / 2;
+      blade.position.y = 0.01;
+      propGroup.add(blade);
+    }
+
+    // Prop hub (silver)
+    const hubGeo = new THREE.CylinderGeometry(0.028, 0.028, 0.035, 14);
+    const hub = new THREE.Mesh(hubGeo, motorCapMat);
+    propGroup.add(hub);
+
+    drone.add(propGroup);
+    propGroups.push({ group: propGroup, dir: i % 2 === 0 ? 1 : -1 });
+  });
+
+  // LEDs — front green pair, rear red pair (real DJI Nav lights)
+  const ledGeo = new THREE.SphereGeometry(0.022, 10, 10);
+  [
+    { x:  0.46, z:  0.43, mat: ledGreenMat },
+    { x: -0.46, z:  0.43, mat: ledGreenMat },
+    { x:  0.46, z: -0.43, mat: ledRedMat },
+    { x: -0.46, z: -0.43, mat: ledRedMat },
+  ].forEach(l => {
+    const led = new THREE.Mesh(ledGeo, l.mat);
+    led.position.set(l.x, -0.09, l.z);
+    drone.add(led);
+  });
+
+  // Status LED bar on top (white, like DJI's indicator)
+  const stripGeo = new THREE.BoxGeometry(0.28, 0.01, 0.018);
+  const strip = new THREE.Mesh(stripGeo, ledWhiteMat);
+  strip.position.set(0, 0.245, 0.08);
+  drone.add(strip);
+
+  // Vent grille lines on body sides
+  for (let v = 0; v < 3; v++) {
+    const ventGeo = new THREE.BoxGeometry(0.01, 0.06, 0.28);
+    const vent = new THREE.Mesh(ventGeo, motorMat);
+    vent.position.set(0.56, 0, -0.1 + v * 0.12);
+    drone.add(vent);
+    const vent2 = new THREE.Mesh(ventGeo, motorMat);
+    vent2.position.set(-0.56, 0, -0.1 + v * 0.12);
+    drone.add(vent2);
+  }
+
+  // Rubber landing feet
+  const footGeo = new THREE.CylinderGeometry(0.02, 0.016, 0.16, 10);
+  [
+    { x:  0.34, z:  0.30 },
+    { x: -0.34, z:  0.30 },
+    { x:  0.34, z: -0.30 },
+    { x: -0.34, z: -0.30 },
+  ].forEach(f => {
+    const foot = new THREE.Mesh(footGeo, rubberMat);
+    foot.position.set(f.x, -0.22, f.z);
+    drone.add(foot);
+    // Foot pad
+    const padGeo = new THREE.CylinderGeometry(0.028, 0.028, 0.014, 10);
+    const pad = new THREE.Mesh(padGeo, rubberMat);
+    pad.position.set(f.x, -0.305, f.z);
+    drone.add(pad);
+  });
+
+  scene.add(drone);
+
+  // ── Ground — subtle dark floor with shadow ──
+  const floorGeo = new THREE.PlaneGeometry(20, 20);
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x0a0b0d, roughness: 0.95, metalness: 0.05 });
+  const floor = new THREE.Mesh(floorGeo, floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -2.8;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  // Subtle grid
+  const gridHelper = new THREE.GridHelper(16, 32, 0x1e2128, 0x161820);
+  gridHelper.position.y = -2.79;
+  scene.add(gridHelper);
+
+  // Shadow disc under drone
+  const shadowGeo = new THREE.CircleGeometry(1.2, 32);
+  const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.35 });
+  const shadowDisc = new THREE.Mesh(shadowGeo, shadowMat);
+  shadowDisc.rotation.x = -Math.PI / 2;
+  shadowDisc.position.y = -2.78;
+  scene.add(shadowDisc);
+
+  // ── Mouse / touch orbit ──
+  let isDragging = false;
+  let lastMouse = { x: 0, y: 0 };
+  let orbitAngles = { theta: 0.3, phi: 0.25 };
+  let targetAngles = { theta: 0.3, phi: 0.25 };
+  let orbitRadius = 5.5;
+  let targetRadius = 5.5;
+
+  droneCanvas.addEventListener('mousedown', e => { isDragging = true; lastMouse = { x: e.clientX, y: e.clientY }; });
+  window.addEventListener('mouseup', () => isDragging = false);
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastMouse.x;
+    const dy = e.clientY - lastMouse.y;
+    targetAngles.theta -= dx * 0.008;
+    targetAngles.phi   = Math.max(-0.5, Math.min(1.1, targetAngles.phi + dy * 0.006));
+    lastMouse = { x: e.clientX, y: e.clientY };
+  });
+  droneCanvas.addEventListener('wheel', e => {
+    targetRadius = Math.max(3, Math.min(10, targetRadius + e.deltaY * 0.008));
+    e.preventDefault();
+  }, { passive: false });
+
+  // Touch support
+  let lastTouch = null;
+  droneCanvas.addEventListener('touchstart', e => { lastTouch = e.touches[0]; });
+  droneCanvas.addEventListener('touchmove', e => {
+    if (!lastTouch) return;
+    const t = e.touches[0];
+    targetAngles.theta -= (t.clientX - lastTouch.clientX) * 0.008;
+    targetAngles.phi = Math.max(-0.5, Math.min(1.1, targetAngles.phi + (t.clientY - lastTouch.clientY) * 0.006));
+    lastTouch = t;
+    e.preventDefault();
+  }, { passive: false });
+
+  // ── HUD updater ──
+  const hudAlt = document.getElementById('hud-alt');
+  const hudSpd = document.getElementById('hud-spd');
+  const hudDist = document.getElementById('hud-dist');
+  const hudBat = document.getElementById('hud-bat');
+
+  // ── Animation loop ──
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.016;
+
+    // Hover float — gentle and realistic
+    drone.position.y = Math.sin(t * 0.75) * 0.10 + Math.sin(t * 1.25) * 0.035;
+    drone.rotation.z = Math.sin(t * 0.55) * 0.022;
+    drone.rotation.x = Math.sin(t * 0.85) * 0.016;
+    drone.position.x = Math.sin(t * 0.28) * 0.07;
+
+    // Shadow tracks drone height
+    shadowDisc.position.y = -2.78;
+    const heightFactor = Math.max(0.2, 1 - (drone.position.y + 0.3) * 0.2);
+    shadowDisc.material.opacity = 0.35 * heightFactor;
+    const shadowScale = 0.7 + (1 - heightFactor) * 0.4;
+    shadowDisc.scale.set(shadowScale, shadowScale, shadowScale);
+
+    // Spin props (fast like real motors)
+    propGroups.forEach(p => {
+      p.group.rotation.y += 0.42 * p.dir;
+    });
+
+    // LED flicker (real DJI nav lights: green front blinks, red rear solid)
+    const greenBlink = Math.sin(t * 8) > 0.3 ? 3.0 : 0.2;
+    ledGreenMat.emissiveIntensity = greenBlink;
+    ledRedMat.emissiveIntensity = 2.8; // rear stays on solid
+
+    // White status bar pulses gently
+    ledWhiteMat.emissiveIntensity = 1.5 + Math.sin(t * 2) * 0.5;
+
+    // Key light subtle variation (simulates clouds / environment)
+    keyLight.intensity = 1.35 + Math.sin(t * 0.4) * 0.08;
+
+    // Smooth orbit
+    orbitAngles.theta += (targetAngles.theta - orbitAngles.theta) * 0.08;
+    orbitAngles.phi   += (targetAngles.phi   - orbitAngles.phi)   * 0.08;
+    orbitRadius       += (targetRadius       - orbitRadius)        * 0.08;
+
+    // Auto-rotate when idle
+    if (!isDragging && !lastTouch) {
+      targetAngles.theta += 0.003;
+    }
+
+    camera.position.x = orbitRadius * Math.sin(orbitAngles.theta) * Math.cos(orbitAngles.phi);
+    camera.position.y = orbitRadius * Math.sin(orbitAngles.phi) + 0.3;
+    camera.position.z = orbitRadius * Math.cos(orbitAngles.theta) * Math.cos(orbitAngles.phi);
+    camera.lookAt(0, drone.position.y * 0.4, 0);
+
+    // HUD update — real DJI-style values
+    if (hudAlt) {
+      const alt = (12.4 + Math.sin(t * 0.4) * 0.3).toFixed(1);
+      hudAlt.innerHTML = alt + '<span style="font-size:0.5rem;color:#6b7280">m</span>';
+    }
+    if (hudSpd) {
+      const spd = (Math.abs(Math.sin(t * 0.6)) * 0.7).toFixed(1);
+      hudSpd.innerHTML = spd + '<span style="font-size:0.5rem;color:#6b7280">m/s</span>';
+    }
+    if (hudDist) {
+      const dist = Math.round(34 + Math.sin(t * 0.2) * 1.5);
+      hudDist.innerHTML = dist + '<span style="font-size:0.5rem;color:#6b7280">m</span>';
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
 </script>
 </body>
 </html>
